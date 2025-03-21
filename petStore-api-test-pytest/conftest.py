@@ -42,46 +42,6 @@ def pytest_addoption(parser):
 
 
 
-'''
-@pytest.fixture
-def register_user(app) -> UserStore:
-    """
-    Register new user
-    """
-    data = RegisterUser.random()
-    res = app.register.register(data=data, type_response=RegisterUserResponse)
-    data = UserStore(user=data, user_uuid=res.data.uuid)
-    return data
-
-
-@pytest.fixture
-def auth_user(app, register_user) -> UserStore:
-    """
-    Login user
-    """
-    res = app.auth.login(data=register_user.user, type_response=AuthUserResponse)
-    token = res.data.access_token
-    header = {"Authorization": f"JWT {token}"}
-    data = UserStore(**register_user.to_dict())
-    data.header = header
-    return data
-
-
-@pytest.fixture
-def user_info_(app, auth_user) -> UserStore:
-    """
-    Add user info
-    """
-    data = AddUserInfo.random()
-    app.user_info.add_user_info(
-        user_id=auth_user.user_uuid, data=data, header=auth_user.header
-    )
-    data_user = UserStore(**auth_user.to_dict())
-    data_user.user_info = data
-    return data_user
-
-'''
-
 
 
 
